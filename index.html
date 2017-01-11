@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="routeApp">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>TEST ANGULAR</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+
+  </head>
+
+  <body ng-controller="mainCtrl as m">
+    <nav class="navbar navbar-default">
+      <ul class="nav navbar-nav">
+        <li><h1 onclick="javascript:window.location.assign('/')">ADIICT</h1></li>
+        <li><a href="#/login" class="btn">Page de login</a></li>
+        <li><a href="#/contact" class="btn">Page de contact</a></li>
+        <li ng-show='isDisconnectable'><a  ng-click='disconnect();' class='btn' id='disconnect'>Déconnection</a> Connecté en tant que: {{ userName }}</li>
+      </ul>
+      <le-nom controller ='m' callback='m.test(value)' date="m.dateSuper"></le-nom>
+    </nav>
+
+    <div class="container" ng-view></div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
+    <script src="angular-ngidle.js"></script>
+    <script src="JS/const.js"></script>
+    <script src="JS/app.js"></script>
+    <script src="JS/ajax.js"></script>
+    <script src="JS/upload.js"></script>
+    <script src="JS/lib/linq.hack.min.js"></script>
+  </body>
+
+</html>
