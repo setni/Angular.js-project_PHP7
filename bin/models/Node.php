@@ -92,7 +92,8 @@ class Node {
         }
 
         $nodeId = $this->mysql->setDBDatas(
-            "INSERT INTO nodes (parentNode_ID, path, record_name, authUsers, lastModif) VALUE (?,?,?,?, NOW())",
+            "nodes",
+            "(parentNode_ID, path, record_name, authUsers, lastModif) VALUE (?,?,?,?, NOW())",
             $paramArray
         );
         return $nodeId ? ['success' => true, 'result' => ['path' => $nodePath, 'nodeId' => $nodeId]]
@@ -114,7 +115,8 @@ class Node {
             if(in_array($userId, $authUsers)) {
                 //var_dump($nodeId);
                 if($this->mysql->unsetDBDatas(
-                        "DELETE FROM nodes WHERE node_ID = ? OR parentNode_ID = ?",
+                        "nodes",
+                        "node_ID = ? OR parentNode_ID = ?",
                         [$nodeId, $nodeId]
                     )
                 ){

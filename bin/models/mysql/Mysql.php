@@ -139,41 +139,62 @@ class Mysql {
     }
 
     /**
+    * @param string $table
     * @param string $sql
     * @param array $params
     * @return Int insert_id
     */
-    public static function setDBDatas($sql, array $params = [])
+    public static function setDBDatas($table, $sql, array $params = [])
     {
         if(self::$user || self::getCurrentUser()['success']) {
-            $stmt = self::_prepareRequest($sql, $params);
+            $stmt = self::_prepareRequest("INSERT INTO ".$table." ".$sql, $params);
             return self::_executeQuery($stmt) ? self::$_mysqli->insert_id : false;
             //return last ID
         }
+        return false;
     }
 
     /**
+    * @param string $table
     * @param string $sql
     * @param array $params
     * @return Boolean
     */
-    public static function unsetDBDatas($sql, array $params = [])
+    public static function unsetDBDatas($table, $sql, array $params = [])
     {
-        if(self::getCurrentUser()['success']) {
-            $stmt = self::_prepareRequest($sql, $params);
+        if(self::$user || self::getCurrentUser()['success']) {
+            $stmt = self::_prepareRequest("DELETE FROM ".$table." WHERE ".$sql, $params);
             return self::_executeQuery($stmt);
         }
         return false;
     }
+
+    /**
+    * @param string $table
+    * @param string $sql
+    * @param array $params
+    * @return Boolean
+    */
+    public static function updateDBDatas($table, $sql, array $params = [])
+    {
+        if(self::$user || self::getCurrentUser()['success']) {
+            $stmt = self::_prepareRequest("UPDATE ".$table." SET ".$sql, $params);
+            return self::_executeQuery($stmt);
+        }
+        return false;
+    }
+
 
     private static function _prepareRequest ($sql, $a_bind_params)
     {
 
         $type_st = ["integer" => 'i', "string" => 's', "double" => 'd', "blob" => 'b'];
         $type = [];
-        foreach($a_bind_params as $param) {
+        foreach($a_bind_params as &$param) {
+            $param = htmlspecialchars($param); //XSS securisation
             $type[] = $type_st[gettype($param)];
         }
+        unset($param);
         $a_params = array();
         $param_type = '';
         $n = count($type);

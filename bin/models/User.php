@@ -33,7 +33,8 @@ class User {
         $token = md5(uniqid());
         $this->mysql->setUser(true);
         if(($id = $this->mysql->setDBDatas(
-                "INSERT INTO users (login, password, API_key, roles, creationDate) VALUE (?, ?, ?, ?, NOW())",
+                "users",
+                "(login, password, API_key, roles, creationDate) VALUE (?, ?, ?, ?, NOW())",
                 [$login, $password, $token, $roles]
             ))
         ) {
