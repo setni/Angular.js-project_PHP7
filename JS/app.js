@@ -3,8 +3,7 @@
 
  angular.module('routeApp', [
     'ngRoute',
-    'ngSanitize',
-//    'ngIdle'
+    'ngSanitize'
   ]).config(['$routeProvider',
     function($routeProvider, IdleProvider, KeepaliveProvider) {
         $routeProvider
