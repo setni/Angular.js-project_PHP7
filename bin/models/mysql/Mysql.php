@@ -1,9 +1,16 @@
 <?php
 
-namespace models\mysql;
+/***********************************************************************************************
+ * Angular->php standard REST API  - Full native php REST API Angular friendly
+ *   Mysql.php Mysql interface full documented used as service
+ * Copyright 2016 Thomas DUPONT
+ * MIT License
+ ************************************************************************************************/
 
-use log\Log;
-use models\mysql\SessionManager;
+namespace bin\models\mysql;
+
+use bin\log\Log;
+use bin\models\mysql\SessionManager;
 
 /**
 * @pattern Singleton
@@ -52,12 +59,13 @@ class Mysql {
 
     private function __construct ()
     {
-        $str = "c2VsZjo6JF9teXNxbGkgPSBteXNxbGlfaW5pdCgpOw0KICAgICAgICBpZiAoIXNlbGY6OiRfbXlzcWxpKSB7DQogICAgICAgICAgICBkaWUoJ215c3FsaV9pbml0IGZhaWxlZCcp
-        Ow0KICAgICAgICB9DQogICAgICAgIGlmICghc2VsZjo6JF9teXNxbGktPnJlYWxfY29ubmVjdChTUUxJUCwgU1FMVVNFUiwgU1FMUFdELCBEQVRBQkFTRSwgU1FMUE9SVCkpIHsN
-        CiAgICAgICAgICAgIGRpZSgnQ29ubmVjdCBFcnJvciAoJyAuIG15c3FsaV9jb25uZWN0X2Vycm5vKCkgLiAnKSAnDQogICAgICAgICAgICAgICAgICAgIC4gbXlzcWxpX2Nvbm5lY3RfZXJyb3Io
-        KSk7DQogICAgICAgIH0NCiAgICAgICAgc2Vzc2lvbl9zdGFydCgpOw==";
-        $launch = OFFUSC;
-        eval($launch($str));
+        self::$_mysqli = mysqli_init();
+        if (!self::$_mysqli) {
+            throw new \Exception(Log::error("mysqli_init failed"), 503);
+        }
+        if (!self::$_mysqli->real_connect(SQLIP, SQLUSER, SQLPWD, DATABASE, SQLPORT)) {
+            throw new \Exception(Log::error("Connect Error ({errno}) {error}", ['errno' => mysqli_connect_errno(), 'error' => mysqli_connect_error()]), 503);
+        }
     }
 
     private function __destruct()

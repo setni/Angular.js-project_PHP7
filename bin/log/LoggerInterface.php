@@ -1,6 +1,13 @@
 <?php
 
-namespace log;
+/***********************************************************************************************
+ * Angular->php standard REST API  - Full native php REST API Angular friendly
+ *   LoggerInterface.php PSR-3 full complaiance
+ * Copyright 2016 Thomas DUPONT
+ * MIT License
+ ************************************************************************************************/
+
+namespace bin\log;
 
 interface LoggerInterface
 {

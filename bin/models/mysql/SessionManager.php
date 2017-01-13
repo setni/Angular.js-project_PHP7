@@ -1,6 +1,12 @@
 <?php
+/***********************************************************************************************
+ * Angular->php standard REST API  - Full native php REST API Angular friendly
+ *   SessionManager.php Management of Session as service
+ * Copyright 2016 Thomas DUPONT
+ * MIT License
+ ************************************************************************************************/
 
- namespace models\mysql;
+ namespace bin\models\mysql;
 
  class SessionManager {
 

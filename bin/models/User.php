@@ -1,9 +1,16 @@
 <?php
 
-namespace models;
+/***********************************************************************************************
+ * Angular->php standard REST API  - Full native php REST API Angular friendly
+ *   User.php User model
+ * Copyright 2016 Thomas DUPONT
+ * MIT License
+ ************************************************************************************************/
 
-use models\mysql\Mysql;
-use models\mysql\SessionManager;
+namespace bin\models;
+
+use bin\models\mysql\Mysql;
+use bin\models\mysql\SessionManager;
 
 /**
 * To do the interface with the Mysql sub-service for user management

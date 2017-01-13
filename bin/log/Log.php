@@ -1,8 +1,15 @@
 <?php
 
-namespace log;
+/***********************************************************************************************
+ * Angular->php standard REST API  - Full native php REST API Angular friendly
+ *   Log.php log management, used as service
+ * Copyright 2016 Thomas DUPONT
+ * MIT License
+ ************************************************************************************************/
 
-class Log implements LoggerInterface{
+namespace bin\log;
+
+final class Log implements LoggerInterface{
 
     /**
     * @var Object Log()
@@ -51,9 +58,11 @@ class Log implements LoggerInterface{
     */
     public static function debug ($message, array $context = [])
     {
-        self::_getInstance();
-        self::_interpolate($message, $context);
-        return self::$instance;
+        if(DEBUG) {
+            self::_getInstance();
+            self::_interpolate($message, $context);
+            return self::$instance;
+        }
     }
 
     /**

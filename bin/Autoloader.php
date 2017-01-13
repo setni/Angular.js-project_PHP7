@@ -1,11 +1,19 @@
 <?php
 
+namespace bin;
+/***********************************************************************************************
+ * Angular->php standard REST API  - Full native php REST API Angular friendly
+ *   Autoloader.php Class of autoloading
+ * Copyright 2016 Thomas DUPONT
+ * MIT License
+ ************************************************************************************************/
+
 /**
 * @PSR PSR-0, PSR-1, PSR-2, PSR-3 , PSR-4 (partial)
 */
-require_once("bin/config.php");
 
-class Autoloader {
+
+final class Autoloader {
 
     public static function register()
     {

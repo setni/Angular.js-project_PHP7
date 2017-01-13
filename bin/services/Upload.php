@@ -1,15 +1,15 @@
 <?php
 
-namespace services;
+namespace bin\services;
 
-use models\mysql\Mysql;
-use models\Node;
+use bin\models\mysql\Mysql;
+use bin\models\Node;
 
 
 /**
 * @pattern Singleton
 */
-class Upload {
+final class Upload {
 
     /**
     * @var Object Upload()

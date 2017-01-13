@@ -1,15 +1,24 @@
 <?php
 
-use http\Http;
-use controllers\AjaxController;
-use log\Log;
-use models\mysql\SessionManager;
+namespace bin;
+
+/***********************************************************************************************
+ * Angular->php standard REST API  - Full native php REST API Angular friendly
+ *   ControllerFactory.php Factory of controller for the MVC Pattern
+ * Copyright 2016 Thomas DUPONT
+ * MIT License
+ ************************************************************************************************/
+
+use bin\http\Http;
+use bin\controllers\AjaxController;
+use bin\log\Log;
+use bin\models\mysql\SessionManager;
 
 /**
 * @pattern Factory
 * All controller call must be secure with the CSRF token validation
 */
-class ControllerFactory {
+final class ControllerFactory {
 
     /**
     * @param Object Http()
@@ -20,11 +29,11 @@ class ControllerFactory {
         $type = $http->getHttp()->controller;
         switch($type) {
             case "Ajax":
-                if((!isset($http->getHttp()->csrf) || $http->getHttp()->csrf == "") || self::_CSRFToken($http->getHttp()->csrf) === false) return json_encode(['success' => false]);
+                if(!self::_checkCSRF($http)) return json_encode(['success' => false]);
                 $exec = new AjaxController($http);
                 break;
             case "Upload":
-                if((!isset($http->getHttp()->csrf) || $http->getHttp()->csrf == "") || self::_CSRFToken($http->getHttp()->csrf) === false) return json_encode(['success' => false]);
+                if(!self::_checkCSRF($http)) return json_encode(['success' => false]);
                 $exec = new UploadController($http);
                 break;
             case "CSRF":
@@ -47,5 +56,11 @@ class ControllerFactory {
         $token = crypt(uniqid());
         SessionManager::setCSRFToken($token);
         return $token;
+    }
+
+    private static function _checkCSRF($http)
+    {
+        $csrf = $http->getHttp()->csrf;
+        return !( CSRFENABLE  && (( !isset($csrf) || $csrf == "" ) || !self::_CSRFToken($csrf) ) ) ;
     }
 }

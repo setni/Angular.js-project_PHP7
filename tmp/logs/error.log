@@ -1,57 +1,7 @@
-Error Trigger at false: 'Wrong SQL: 
-          SELECT * FROM nodes WHERE nodeID = ?
-         Error: 1054 Unknown column \'nodeID\' in \'where clause\''Error Trigger at false: 'Wrong SQL: 
-          SELECT * FROM nodes WHERE nodeID = ?
-         Error: 1054 Unknown column \'nodeID\' in \'where clause\''
-Error Trigger at false: 'Wrong SQL: 
-          SELECT * FROM nodes WHERE nodeID = ?
-         Error: 1054 Unknown column \'nodeID\' in \'where clause\''
-Error Trigger at 'Tuesday 20th of December 2016 10:32:07 AM': 'Wrong SQL: 
-          SELECT * FROM nodes WHERE nodeID = ?
-         Error: 1054 Unknown column \'nodeID\' in \'where clause\''
-Error Trigger at 'Wednesday 4th of January 2017 02:52:17 PM': 'Wrong SQL: 
-          SELECT node_ID, parentNode_ID, path, record_name, authUsers, lastModif FROM nodes
-         error. 1054 Unknown column \'authUsers\' in \'field list\''
-Error Trigger at 'Wednesday 4th of January 2017 02:52:17 PM': 'Wrong SQL: 
-          SELECT node_ID, parentNode_ID, path, record_name, authUsers, lastModif FROM nodes
-         error. 1054 Unknown column \'authUsers\' in \'field list\''
-Error Trigger at 'Wednesday 4th of January 2017 02:53:24 PM': 'Wrong SQL: 
-          SELECT node_ID, parentNode_ID, path, record_name, authUsers, lastModif FROM nodes
-         error. 1054 Unknown column \'authUsers\' in \'field list\''
-Error Trigger at 'Wednesday 4th of January 2017 02:53:24 PM': 'Wrong SQL: 
-          SELECT node_ID, parentNode_ID, path, record_name, authUsers, lastModif FROM nodes
-         error. 1054 Unknown column \'authUsers\' in \'field list\''
-Error Trigger at 'Wednesday 4th of January 2017 02:53:53 PM': 'Wrong SQL: 
-          SELECT node_ID, parentNode_ID, path, record_name, authUsers, lastModif FROM nodes
-         error. 1054 Unknown column \'authUsers\' in \'field list\''
-Error Trigger at 'Wednesday 4th of January 2017 02:53:53 PM': 'Wrong SQL: 
-          SELECT node_ID, parentNode_ID, path, record_name, authUsers, lastModif FROM nodes
-         error. 1054 Unknown column \'authUsers\' in \'field list\''
-Error Trigger at 'Wednesday 4th of January 2017 02:54:25 PM': 'Wrong SQL: 
-          SELECT node_ID, parentNode_ID, path, record_name, authUsers, lastModif FROM nodes
-         error. 1054 Unknown column \'authUsers\' in \'field list\''
-Error Trigger at 'Wednesday 4th of January 2017 02:54:25 PM': 'Wrong SQL: 
-          SELECT node_ID, parentNode_ID, path, record_name, authUsers, lastModif FROM nodes
-         error. 1054 Unknown column \'authUsers\' in \'field list\''
-Error Trigger at 'Wednesday 4th of January 2017 02:54:59 PM': 'Wrong SQL: 
-          SELECT node_ID, parentNode_ID, path, record_name, authUsers, lastModif FROM nodes
-         error. 1054 Unknown column \'authUsers\' in \'field list\''
-Error Trigger at 'Wednesday 4th of January 2017 02:54:59 PM': 'Wrong SQL: 
-          SELECT node_ID, parentNode_ID, path, record_name, authUsers, lastModif FROM nodes
-         error. 1054 Unknown column \'authUsers\' in \'field list\''
-Error Trigger at 'Wednesday 4th of January 2017 04:50:29 PM': 'Error to execute SQL query No data supplied for parameters in prepared statement'
-Error Trigger at 'Wednesday 4th of January 2017 04:54:52 PM': 'Error to execute SQL query No data supplied for parameters in prepared statement'
-Error Trigger at 'Wednesday 4th of January 2017 04:56:34 PM': 'Error to execute SQL query No data supplied for parameters in prepared statement'
-Error Trigger at 'Wednesday 4th of January 2017 05:00:33 PM': 'Error to execute SQL query No data supplied for parameters in prepared statement'
-Error Trigger at 'Wednesday 4th of January 2017 05:01:18 PM': 'Error to execute SQL query No data supplied for parameters in prepared statement'
-Error Trigger at 'Wednesday 4th of January 2017 05:01:49 PM': 'Error to execute SQL query No data supplied for parameters in prepared statement'
-Error Trigger at 'Wednesday 4th of January 2017 05:02:08 PM': 'Error to execute SQL query No data supplied for parameters in prepared statement'
-Error Trigger at 'Wednesday 4th of January 2017 05:02:32 PM': 'Error to execute SQL query No data supplied for parameters in prepared statement'
-Error Trigger at 'Wednesday 4th of January 2017 05:02:58 PM': 'Error to execute SQL query No data supplied for parameters in prepared statement'
-Error Trigger at 'Wednesday 4th of January 2017 05:03:22 PM': 'Error to execute SQL query No data supplied for parameters in prepared statement'
-Error Trigger at 'Wednesday 4th of January 2017 05:03:44 PM': 'Error to execute SQL query No data supplied for parameters in prepared statement'
-Error Trigger at 'Wednesday 4th of January 2017 05:04:04 PM': 'Error to execute SQL query No data supplied for parameters in prepared statement'
-Error Trigger at 'Wednesday 4th of January 2017 05:04:28 PM': 'Error to execute SQL query No data supplied for parameters in prepared statement'
-Error Trigger at 'Wednesday 4th of January 2017 05:05:22 PM': 'Error to execute SQL query No data supplied for parameters in prepared statement'
-Error Trigger at 'Wednesday 4th of January 2017 05:05:47 PM': 'Error to execute SQL query No data supplied for parameters in prepared statement'
-Error Trigger at 'Wednesday 4th of January 2017 05:07:07 PM': 'Error to execute SQL query No data supplied for parameters in prepared statement'
+Error Trigger at 'Thursday 22nd of December 2016 08:25:49 PM': 'Wrong SQL: 
+          SELECT * FROM nodes
+         Error: 1146 Table \'testangular.nodes\' doesn\'t exist'
+Error Trigger at 'Thursday 22nd of December 2016 08:25:49 PM': 'Wrong SQL: 
+          SELECT * FROM nodes
+         Error: 1146 Table \'testangular.nodes\' doesn\'t exist'
+Error Trigger at 'Wednesday 4th of January 2017 05:52:34 PM': 'Error to execute SQL query No data supplied for parameters in prepared statement'

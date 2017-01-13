@@ -1,17 +1,24 @@
 <?php
 
-namespace controllers;
+/***********************************************************************************************
+ * Angular->php standard REST API  - Full native php REST API Angular friendly
+ *   AjaxController.php Controller for all Ajax request
+ * Copyright 2016 Thomas DUPONT
+ * MIT License
+ ************************************************************************************************/
 
-use models\Cart;
-use models\Order;
-use models\Node;
-use models\User;
-use services\Upload;
+namespace bin\controllers;
+
+use bin\models\Cart;
+use bin\models\Order;
+use bin\models\Node;
+use bin\models\User;
+use bin\services\Upload;
 
 /**
 * @pattern Command, VMC
 */
-class AjaxController implements APIInterface {
+final class AjaxController implements APIInterface {
 
     /**
     * @var Object Http request
@@ -24,6 +31,10 @@ class AjaxController implements APIInterface {
         $this->request = $request->getHttp();
     }
 
+    /**
+    * @return JSON || false
+    *
+    */
     public function execute ()
     {
         $funct = "_".$this->request->action;

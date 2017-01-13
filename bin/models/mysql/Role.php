@@ -1,6 +1,6 @@
 <?php
 
- namespace models\mysql;
+ namespace bin\models\mysql;
 
  class Role {
 
@@ -43,7 +43,7 @@
              }
              $implode = $implode.$role;
          }
-         return ($implode == '0000') ? false : true;
+         return !($implode == '0000') ;
          //var_dump($roles);
      }
 

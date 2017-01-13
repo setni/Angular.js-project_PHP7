@@ -1,3 +1,12 @@
+
+/***********************************************************************************************
+ * Angular template - Angular example (user and Digital assets management) with a full native php REST API Angular friendly
+ *   app.js Controller of Angular project
+ *   Version: 0.1.1
+ * Copyright 2016 Thomas DUPONT
+ * MIT License
+ ************************************************************************************************/
+
 (function () {
   'use strict';
 
@@ -228,7 +237,7 @@
             createScope : false,
             templateUrl: 'template/folder.html',
             link: function(scope, element, attrs){
-                scope.folder.isFolder = (scope.folder.path.match(/\./) === null) ? true : false;
+                scope.folder.isFolder = scope.folder.path.match(/\./) === null;
                 scope.toggle = function(folder){
                     scope.controller.pathInUpload = folder.path;
                     scope.controller.nodeidUpload = folder.node_ID;

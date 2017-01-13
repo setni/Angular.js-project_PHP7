@@ -1,10 +1,17 @@
 <?php
 
-namespace models;
+/***********************************************************************************************
+ * Angular->php standard REST API  - Full native php REST API Angular friendly
+ *   Node.php Node (files + folders) model
+ * Copyright 2016 Thomas DUPONT
+ * MIT License
+ ************************************************************************************************/
 
-use models\mysql\Mysql;
-use models\mysql\SessionManager;
-use models\mysql\Role;
+namespace bin\models;
+
+use bin\models\mysql\Mysql;
+use bin\models\mysql\SessionManager;
+use bin\models\mysql\Role;
 
 class Node {
 
