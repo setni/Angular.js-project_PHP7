@@ -1,7 +1,7 @@
 Angular.js-project
 ==========
 
-**A PHP library that provides an incredibly easy way to access Twitter data as JSON, pretty printed JSON, or RSS feeds by URL or standard command line syntax.  The Tweetledee files include caching to avoid exceeding the Twitter API v1.1 rate limits (see [caveats in the documentation](http://chrissimpkins.github.io/tweetledee/caching.html)!).**
+**A full example of complete Angular project develop with a native PHP API.**
 
 ## Documentation
 - Developer Docs: [https://github.com/setni/Angular.js-project/wiki](https://github.com/setni/Angular.js-project/wiki)
@@ -31,33 +31,17 @@ Angular.js-project
 
 Make sure that apache/mysql or php server (php -S localhost:[PORT]) is running. And enjoy
 
-## What You Get
-### Twitter RSS Feeds
-##### Favorites RSS Feed [<code>favoritesrss.php</code>] + [<code>favoritesrss_nocache.php</code>]
-##### Home Timeline RSS Feed [<code>homerss.php</code>] + [<code>homerss_nocache.php</code>]
-##### User Lists RSS Feed [<code>listsrss.php</code>] + [<code>listrss_nocache.php</code>]
-##### User Timeline RSS Feed [<code>userrss.php</code>] + [<code>userrss_nocache.php</code>]
-##### Search RSS Feed [<code>searchrss.php</code>] + [<code>searchrss_nocache.php</code>]
-
-### Twitter JSON
-##### Favorites JSON [<code>favoritesjson.php</code>] + [<code>favoritesjson_nocache.php</code>]
-##### Home Timeline JSON [<code>homejson.php</code>] + [<code>homejson_nocache.php</code>]
-##### User Lists JSON [<code>listsjson.php</code>] + [<code>listsjson_nocache.php</code>]
-##### User Timeline JSON [<code>userjson.php</code>] + [<code>userjson_nocache.php</code>]
-##### Search JSON [<code>searchjson.php</code>] + + [<code>searchjson_nocache.php</code>]
-
-### Pretty Printed JSON
-##### Favorites Pretty Printed JSON [<code>favoritesjson_pp.php</code>] + [<code>favoritesjson_pp_nocache.php</code>]
-##### Home Timeline Pretty Printed JSON [<code>homejson_pp.php</code>] + [<code>homejson_pp_nocache.php</code>]
-##### User Lists Pretty Printed JSON [<code>listsjson_pp.php</code>] + [<code>listsjson_pp_nocache.php</code>]
-##### User Timeline Pretty Printed JSON [<code>userjson_pp.php</code>] + [<code>userjson_pp_nocache.php</code>]
-##### Search Pretty Printed JSON [<code>searchjson_pp.php</code>] + [<code>searchjson_pp_nocache.php</code>]
-
 ## Usage
 <a href="https://github.com/setni/Angular.js-project/wiki">Wiki link for documentation</a>
 
 ## Complaiance
-- <b>PSR-0</b> (Autoloading Standard) : Full.
+
+- <b>PSR-1</b> (Basic Coding Standard) : Full.
+- <b>PSR-2</b> (Coding Style Guide) : Full.
+- <b>PSR-3</b> (Logger Interface) : Full.
+- <b>PSR-4</b> (Autoloading Standard) : Full.
+- <b>PSR-6</b> (Caching Interface) : No.
+- <b>PSR-7</b> (HTTP Message Interface) : Partial.
 
 
 ## Bugs
