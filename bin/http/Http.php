@@ -10,7 +10,15 @@
 namespace bin\http;
 
 final class Http {
+
+    /**
+    * @var object $request
+    */
     private static $request;
+
+    /**
+    * @var object $instance
+    */
     private static $_instance;
 
     public static function getInstance()
@@ -21,12 +29,19 @@ final class Http {
         return static::$_instance;
     }
 
+    /**
+    * @param object $request
+    * @return instance of class
+    */
     public static function setHttp($request)
     {
         static::$request = $request;
         return static::$_instance;
     }
 
+    /**
+    * @return $request
+    */
     public static function getHttp()
     {
         return static::$request;

@@ -21,7 +21,7 @@
      * @param string $roles
      * @param Int $id
      */
-     public static function setSession ($token, $roles, $id)
+     public static function setSession ($token, $roles = "", $id)
      {
          $_SESSION['APITOKEN'] = $token;
          $_SESSION['roles'] = $roles;
