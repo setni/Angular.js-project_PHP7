@@ -16,9 +16,8 @@ final class Http {
     public static function getInstance()
     {
         if(is_null(static::$_instance)) {
-            static::$_instance = new Http();
+            static::$_instance = new self;
         }
-
         return static::$_instance;
     }
 

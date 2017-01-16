@@ -38,7 +38,7 @@ final class Upload {
     private static function _getInstance ()
     {
         if(is_null(self::$instance)) {
-            self::$instance = new Upload();
+            self::$instance = new self;
         }
     }
 

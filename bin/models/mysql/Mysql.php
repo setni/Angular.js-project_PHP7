@@ -52,7 +52,7 @@ class Mysql {
     public static function getInstance()
     {
         if(is_null(self::$_instance)) {
-             self::$_instance = new Mysql();
+             self::$_instance = new self;
         }
         return self::$_instance;
     }
@@ -156,10 +156,10 @@ class Mysql {
     {
         if(self::$user || self::getCurrentUser()['success']) {
             $stmt = self::_prepareRequest("INSERT INTO ".$table." ".$sql, $params);
-            return self::_executeQuery($stmt) ? self::$_mysqli->insert_id : false;
+            return self::_executeQuery($stmt) ? self::$_mysqli->insert_id : 0;
             //return last ID
         }
-        return false;
+        return 0;
     }
 
     /**

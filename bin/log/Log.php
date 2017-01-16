@@ -30,7 +30,7 @@ final class Log implements LoggerInterface{
     private static function _getInstance ()
     {
         if(is_null(self::$instance)) {
-            self::$instance = new Log();
+            self::$instance = new self;
         }
     }
 
