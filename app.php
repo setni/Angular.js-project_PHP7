@@ -3,7 +3,7 @@
 /***********************************************************************************************
  * Angular->php standard REST API  - Full native php REST API Angular friendly
  *   app.php destination of all API request
- *   Version: 0.1.1
+ *   Version: 0.1.2
  * Copyright 2016 Thomas DUPONT
  * MIT License
  ************************************************************************************************/

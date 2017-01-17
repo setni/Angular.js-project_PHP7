@@ -18,17 +18,11 @@ use bin\services\Upload;
 /**
 * @pattern Command, VMC
 */
-final class AjaxController implements APIInterface {
+final class AjaxController extends Controller implements APIInterface {
 
-    /**
-    * @var Object Http request
-    *
-    */
-    private $request;
-
-    public function __construct($request)
+    public function __construct()
     {
-        $this->request = $request->getHttp();
+        parent::__construct();
     }
 
     /**
