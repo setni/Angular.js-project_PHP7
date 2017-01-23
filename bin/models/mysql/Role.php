@@ -4,18 +4,21 @@
 
  class Role {
 
+     /**
+     * @var write Role
+     */
      private static $write = false;
 
      private function _construct ()
      {
-
      }
 
      /**
      * @var Array $roles
      * @return Boolean
      */
-     public static function checkRoles (Array $roles)
+     public static function checkRoles (array $roles)
+     : bool
      {
          $implode = "";
          foreach ($roles as $type => $role) {
@@ -44,7 +47,6 @@
              $implode = $implode.$role;
          }
          return !($implode == '0000') ;
-         //var_dump($roles);
      }
 
  }

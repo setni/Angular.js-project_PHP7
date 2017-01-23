@@ -28,6 +28,7 @@ final class Log implements LoggerInterface{
 	}
 
     private static function _getInstance ()
+    : void
     {
         if(is_null(self::$instance)) {
             self::$instance = new self;
@@ -35,11 +36,11 @@ final class Log implements LoggerInterface{
     }
 
     /**
-    * @param string $message
-    * @param array $context
-    * @return $instance
+    * @param $message
+    * @param $context
     */
-    public static function error ($message, array $context = [])
+    public static function error (string $message, array $context = [])
+    : self
     {
         self::_getInstance();
         self::_interpolate($message, $context);
@@ -52,11 +53,11 @@ final class Log implements LoggerInterface{
     }
 
     /**
-    * @param string $message
-    * @param array $context
-    * @return $instance
+    * @param $message
+    * @param $context
     */
-    public static function debug ($message, array $context = [])
+    public static function debug (string $message, array $context = [])
+    : self
     {
         if(DEBUG) {
             self::_getInstance();
@@ -66,11 +67,11 @@ final class Log implements LoggerInterface{
     }
 
     /**
-    * @param string $message
-    * @param array $context
-    * @return $instance
+    * @param $message
+    * @param $context
     */
-    public static function warning ($message, array $context = [])
+    public static function warning (string $message, array $context = [])
+    : self
     {
         self::_getInstance();
         self::_interpolate($message, $context);
@@ -82,7 +83,8 @@ final class Log implements LoggerInterface{
         return self::$message;
     }
 
-    private static function _interpolate (&$message, $context)
+    private static function _interpolate (string &$message, array $context)
+    : void
     {
         $replace = [];
         foreach ($context as $index => $type) {

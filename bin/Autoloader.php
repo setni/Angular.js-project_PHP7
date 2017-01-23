@@ -16,11 +16,13 @@ namespace bin;
 final class Autoloader {
 
     public static function register()
+    : void
     {
         spl_autoload_register(array(__CLASS__, 'autoload'));
     }
 
-    private static function autoload($class)
+    private static function autoload(string $class)
+    : void
     {
         $parts = preg_split("#\\\#", $class);
         $className = array_pop($parts);

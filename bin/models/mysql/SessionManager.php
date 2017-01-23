@@ -11,17 +11,19 @@
  class SessionManager {
 
      public static function unsetSession()
+     : void
      {
          session_unset();
          session_destroy();
      }
 
      /**
-     * @param string $token
-     * @param string $roles
-     * @param Int $id
+     * @param $token
+     * @param $roles
+     * @param $id
      */
-     public static function setSession ($token, $roles = "", $id)
+     public static function setSession (string $token, string $roles = "", int $id)
+     : void
      {
          $_SESSION['APITOKEN'] = $token;
          $_SESSION['roles'] = $roles;
@@ -29,21 +31,24 @@
      }
 
      public static function getSession ()
+     : array
      {
          return isset($_SESSION['APITOKEN']) ? $_SESSION : ['APITOKEN' => ""];
      }
 
      /**
-     * @param string $token
+     * @param $token
      * CSRF attack securisation
      */
-     public static function setCSRFToken ($token)
+     public static function setCSRFToken (string $token)
+     : void
      {
          $_SESSION['CSRF'] = $token;
      }
 
      public static function getCSRFToken ()
+     : string
      {
-         return isset($_SESSION['CSRF']) ? $_SESSION['CSRF'] : false;
+         return isset($_SESSION['CSRF']) ? $_SESSION['CSRF'] : "";
      }
  }

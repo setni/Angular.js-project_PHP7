@@ -1,7 +1,7 @@
 Angular.js-project
 ==========
 
-**A full example of complete Angular project develop with a native PHP API.**
+**A full example of complete Angular project develop with a native PHP7.1 API.**
 
 ## Documentation
 - Developer Docs: [https://github.com/setni/Angular.js-project/wiki](https://github.com/setni/Angular.js-project/wiki)
@@ -15,7 +15,7 @@ Angular.js-project
 
 ## Requirement for using
 **You will need the following**:
- - PHP version 5.5 or higher
+ - PHP version 7.1 or higher
  - Apache2 or run native php server
  - Mysql5 And a DataBase
  - A <a href="https://github.com/setni/Angular.js-project/wiki">WIKI</a> document The Standard service you could use in this API

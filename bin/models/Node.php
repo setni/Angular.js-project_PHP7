@@ -21,12 +21,19 @@ class Node {
     */
     private $mysql;
 
+    /**
+    * @var array list of forbidden chars used to create file or folder
+    *
+    */
+    private $forbidenChars = ['%','$','≠','∞','~','ß','◊','©','≈','‹','≤','≥','µ','¬','ﬁ','ƒ','∂','‡','®','†','º','π','§','¶','','•','#','°','.', '/', '\\'];
+
     public function __construct ()
     {
         $this->mysql = Mysql::getInstance();
     }
 
     public function getNodes ()
+    : array
     {
         $dataSet = $this->mysql->getDBDatas("
           SELECT node_ID, parentNode_ID, path, record_name, authUsers, lastModif FROM nodes
@@ -51,18 +58,17 @@ class Node {
     }
 
     /**
-    * @param int $nodeId
-    * @return array detail
+    * @param $nodeId
     *
     */
-    public function getNode ($nodeId)
+    public function getNode (int $nodeId)
+    : array
     {
         $dataSet = $this->mysql->getDBDatas("
           SELECT node_ID, parentNode_ID, path, record_name, authUsers, lastModif FROM nodes WHERE node_ID = ?
         ", [$nodeId])->toObject();
 
         if($dataSet['success']) {
-            //var_dump( $dataSet['session']);
             if(Role::checkRoles((array) str_split($dataSet['session']["roles"]))) {
 
                 unset($dataSet['session']);
@@ -76,14 +82,15 @@ class Node {
     }
 
     /**
-    * @param int $parentNodeId
-    * @param string $name
-    * @param Boolean $isDirectory
-    * @return array $path (of parentNode)
+    * @param $parentNodeId
+    * @param $name
+    * @param $isDirectory
     *
     */
-    public function setNode ($nodeId, $name, $isDir = false)
+    public function setNode (int $nodeId, string $name, bool $isDir = false)
+    : array
     {
+        $this->_cleanNodeName($name);
         $check = $this->getNode($nodeId);
 
         if($check['success']) {
@@ -108,11 +115,11 @@ class Node {
     }
 
     /**
-    * @param int $nodeId
-    * @return Boolean
+    * @param $nodeId
     * This function check if the nodeID exist, if the user has the power of this nodeId and if the deletion works fine
     */
-    public function unsetNode ($nodeId)
+    public function unsetNode (int $nodeId)
+    : array
     {
         $nodeInfo = $this->getNode($nodeId);
 
@@ -141,7 +148,9 @@ class Node {
         return ['success' => false];
     }
 
-    private function _rrmdir($dir) {
+    private function _rrmdir(string $dir)
+    : void
+    {
         if (is_dir($dir)) {
             $objects = scandir($dir);
             foreach ($objects as $object) {
@@ -156,11 +165,18 @@ class Node {
         }
     }
 
-    private function _createDir (&$nodePath)
+    private function _createDir (string &$nodePath)
+    : void
     {
         $nodePath .= "/";
         $oldmask = umask(0);
         mkdir(USERDIR.$nodePath, 0777);
         umask($oldmask);
+    }
+
+    private function _cleanNodeName (string &$name)
+    : void
+    {
+        $name = str_replace($this->forbidenChars, "", $name);
     }
 }

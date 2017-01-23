@@ -65,6 +65,7 @@ if(isset($_POST['DATABASE'])) {
 
     $query = "SELECT Name, CountryCode, District FROM myCity WHERE Name LIKE ? ";
     $stmt = $mysqli->prepare($query);
+    $par = "";
     $par &= "%".$val1."%";
     $stmt->bind_param("s", $par);
     $stmt->execute();

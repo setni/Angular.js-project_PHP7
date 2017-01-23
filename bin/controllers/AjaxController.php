@@ -9,10 +9,7 @@
 
 namespace bin\controllers;
 
-use bin\models\Cart;
-use bin\models\Order;
-use bin\models\Node;
-use bin\models\User;
+use bin\models\{Cart, Order, Node, User};
 use bin\services\Upload;
 
 /**
@@ -26,10 +23,11 @@ final class AjaxController extends Controller implements APIInterface {
     }
 
     /**
-    * @return JSON || false
+    * MUST be implemented
     *
     */
     public function execute ()
+    : string
     {
         $funct = "_".$this->request->action;
         $functWhiteList = [
@@ -44,58 +42,68 @@ final class AjaxController extends Controller implements APIInterface {
           '_DELETENODE',
           '_CREATEFOLDER'
         ];
-        return in_array($funct, $functWhiteList) ? $this->$funct($this->request) : false;
+        return in_array($funct, $functWhiteList) ? $this->$funct($this->request) : json_encode(['success' => false]);
     }
 
-    private function _SENDCONTACT ($request)
+    private function _SENDCONTACT (\stdClass $request)
+    : string
     {
         return $request->text;
     }
 
-    private function _LOGIN ($request)
+    private function _LOGIN (\stdClass $request)
+    : string
     {
         $user = new User();
+
         return json_encode($user->login((string) $request->login, (string) $request->password));
     }
 
-    private function _GETCART ($request)
+    private function _GETCART (\stdClass $request)
+    : string
     {
         $cart = new Cart($this->mysql);
         $myCart = $cart->getCart();
         //.....
     }
     private function _GETHOME ()
+    : string
     {
         $node = new Node();
         return json_encode($node->getNodes());
     }
 
-    private function _UPLOAD ($request)
+    private function _UPLOAD (\stdClass $request)
+    : string
     {
         return json_encode(
             Upload::checkFile($request->file, $request->filename)->moveFile($request->pNodeId)
         );
     }
 
-    private function _CREATEFOLDER ($request)
+    private function _CREATEFOLDER (\stdClass $request)
+    : string
     {
         $node = new Node();
         return json_encode($node->setNode($request->nodeId, $request->name, true));
     }
 
-    private function _DELETENODE ($request)
+    private function _DELETENODE (\stdClass $request)
+    : string
     {
         $node = new Node();
         return json_encode($node->unsetNode($request->nodeId));
     }
 
     private function _CHECKUSER ()
+    : string
     {
         $user = new User();
         return json_encode($user->checkUser());
     }
 
-    private function _REGISTER ($request)
+    private function _REGISTER (\stdClass $request)
+    : string
     {
         $user = new User();
         $createUser = $user->register((string) $request->login, (string) $request->password);
@@ -103,6 +111,7 @@ final class AjaxController extends Controller implements APIInterface {
     }
 
     private function _DISCONNECT ()
+    : string
     {
         $user = new User();
         return json_encode($user->disconnect());

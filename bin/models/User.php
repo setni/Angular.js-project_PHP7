@@ -30,12 +30,12 @@ class User {
      }
 
      /**
-     * @param string $login
-     * @param string $pwd
-     * @param string $roles (Admin, Owner folder, Read, Write)
-     * @return Boolean
+     * @param $login
+     * @param $pwd password
+     * @param $roles (Admin, Owner folder, Read, Write)
      */
-     public function register ($login, $password, $roles = "0111")
+     public function register (string $login, string $password, string $roles = "0111")
+     : array
      {
         $token = md5(uniqid());
         $this->mysql->setUser(true);
@@ -52,12 +52,13 @@ class User {
      }
 
      /**
-     * @param string $login
-     * @param string $pwd
-     * @return Boolean
+     * @param $login
+     * @param $pwd
      */
-     public function login ($login, $password)
+     public function login (string $login, string $password)
+     : array
      {
+
         $this->mysql->setUser(true);
         $dataSet = $this->mysql->getDBDatas(
             "SELECT * FROM users WHERE login = ?",
@@ -76,12 +77,14 @@ class User {
      }
 
      public function disconnect ()
+     : array
      {
          SessionManager::unsetSession();
          return ['success' => true];
      }
 
      public function checkUser ()
+     : array
      {
          return $this->mysql->getCurrentUser();
      }

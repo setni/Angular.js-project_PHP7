@@ -15,6 +15,7 @@ namespace bin\controllers;
 */
 interface APIInterface {
 
-  public function execute ();
+  public function execute ()
+  : string;
 
 }

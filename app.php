@@ -1,12 +1,14 @@
 <?php
 
 /***********************************************************************************************
- * Angular->php standard REST API  - Full native php REST API Angular friendly
+ * Angular->php 7.1 standard REST API  - Full native php REST API Angular friendly
+ * BE CAREFULL, only for php 7.1 or highter
  *   app.php destination of all API request
  *   Version: 0.1.2
- * Copyright 2016 Thomas DUPONT
+ * Copyright 2016-2017 Thomas DUPONT
  * MIT License
  ************************************************************************************************/
+declare(strict_types = 1);
 
 define("ROOTDIR", __DIR__."/");
 session_start();
@@ -18,10 +20,12 @@ bin\Autoloader::register();
 if(($post = json_decode(file_get_contents("php://input"))) === null) {
     exit("Merci de passer un objet JSON");
 }
-
-$http = bin\http\Http::getInstance()->setHttp($post);
-$response = bin\ControllerFactory::load($http);
-
+try {
+    $http = bin\http\Http::getInstance()->setHttp($post);
+    $response = bin\ControllerFactory::load($http);
+} catch(\EngineException $e) {
+    $response = json_encode(['success' => false, 'message' => $e->getMessage()]);
+}
 echo <<<JSON
 {$response}
 JSON;

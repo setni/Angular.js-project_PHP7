@@ -16,6 +16,11 @@ final class Http {
     * @var object $request
     */
     private static $request;
+
+    /**
+    * All HTTP header concerning server
+    * @var object $server
+    */
     public static $server;
 
     /**
@@ -24,6 +29,7 @@ final class Http {
     private static $instance;
 
     public static function getInstance()
+    : self
     {
         if(is_null(static::$instance)) {
             static::$instance = new self;
@@ -37,6 +43,7 @@ final class Http {
     }
 
     private static function _server()
+    : void
     {
         static::$server = (object) $_SERVER;
     }
@@ -44,9 +51,9 @@ final class Http {
     /**
     * set http request (POST and GET)
     * @param object $request
-    * @return instance of class
     */
-    public static function setHttp($request)
+    public static function setHttp(\stdClass $request)
+    : self
     {
         static::$request = $request;
         return static::$instance;
@@ -54,18 +61,18 @@ final class Http {
 
     /**
     * get http request (POST and GET)
-    * @return $request
     */
     public static function getHttp()
+    : \stdClass
     {
         return static::$request;
     }
 
     /**
     * set http server variable
-    * @return $server
     */
     public static function getServer()
+    : \stdClass
     {
         return static::$server;
     }

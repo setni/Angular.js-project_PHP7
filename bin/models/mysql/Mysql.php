@@ -41,15 +41,14 @@ class Mysql {
     */
     public static $user = false;
 
-    /**
-    * @param Boolean
-    */
-    public static function setUser($bool)
+    public static function setUser(bool $bool)
+    : void
     {
         self::$user = $bool;
     }
 
     public static function getInstance()
+    : self
     {
         if(is_null(self::$_instance)) {
              self::$_instance = new self;
@@ -60,24 +59,29 @@ class Mysql {
     private function __construct ()
     {
         self::$_mysqli = mysqli_init();
-        if (!self::$_mysqli) {
-            throw new \Exception(Log::error("mysqli_init failed"), 503);
+        try {
+            if (!self::$_mysqli) {
+                throw new \Exception(Log::error("mysqli_init failed"), 503);
+            }
+            if (!self::$_mysqli->real_connect(SQLIP, SQLUSER, SQLPWD, DATABASE, SQLPORT)) {
+                throw new \Exception(Log::error("Connect Error ({errno}) {error}", ['errno' => mysqli_connect_errno(), 'error' => mysqli_connect_error()]), 503);
+            }
+        } catch (\Exception $e) {
+            echo $e->getMessage();
         }
-        if (!self::$_mysqli->real_connect(SQLIP, SQLUSER, SQLPWD, DATABASE, SQLPORT)) {
-            throw new \Exception(Log::error("Connect Error ({errno}) {error}", ['errno' => mysqli_connect_errno(), 'error' => mysqli_connect_error()]), 503);
-        }
+
     }
 
-    private function __destruct()
+    public function __destruct()
     {
         self::$_mysqli->close();
     }
 
     /**
     * All sql operation must be authorised
-    * @return array
     */
     public static function getCurrentUser()
+    : array
     {
         $sql = "SELECT * FROM users WHERE API_key = '".SessionManager::getSession()['APITOKEN']."'";
         $result = self::$_mysqli->query($sql);
@@ -92,11 +96,11 @@ class Mysql {
 
     }
     /**
-    * @param string $sql
-    * @param array $params
-    * @return instance
+    * @param $sql
+    * @param $params
     */
-    public static function getDBDatas ($sql, array $params = [])
+    public static function getDBDatas (string $sql, array $params = [])
+    : self
     {
 
         $stmt = self::_prepareRequest($sql, $params);
@@ -108,12 +112,14 @@ class Mysql {
     }
 
     public static function toArray()
+    : array
     {
         $resultSet = MYSQLI_NUM;
         return self::_getResult($resultSet);
     }
 
     public static function toArrayAssoc()
+    : array
     {
         $resultSet = MYSQLI_ASSOC;
         return self::_getResult($resultSet);
@@ -121,6 +127,7 @@ class Mysql {
     }
 
     public static function toObject()
+    : array
     {
 
         if((self::$user || self::getCurrentUser()['success']) && self::$result->num_rows) {
@@ -134,7 +141,8 @@ class Mysql {
         }
     }
 
-    private static function _getResult($resultSet)
+    private static function _getResult(int $resultSet)
+    : array
     {
         if((self::$user || self::getCurrentUser()['success']) && self::$result->num_rows) {
             $dataSet = self::$result->fetch_all($resultSet);
@@ -147,12 +155,12 @@ class Mysql {
     }
 
     /**
-    * @param string $table
-    * @param string $sql
-    * @param array $params
-    * @return Int insert_id
+    * @param $table
+    * @param $sql
+    * @param $params
     */
-    public static function setDBDatas($table, $sql, array $params = [])
+    public static function setDBDatas(string $table, string $sql, array $params = [])
+    : int
     {
         if(self::$user || self::getCurrentUser()['success']) {
             $stmt = self::_prepareRequest("INSERT INTO ".$table." ".$sql, $params);
@@ -163,12 +171,12 @@ class Mysql {
     }
 
     /**
-    * @param string $table
-    * @param string $sql
-    * @param array $params
-    * @return Boolean
+    * @param $table
+    * @param $sql
+    * @param $params
     */
-    public static function unsetDBDatas($table, $sql, array $params = [])
+    public static function unsetDBDatas(string $table, string $sql, array $params = [])
+    : bool
     {
         if(self::$user || self::getCurrentUser()['success']) {
             $stmt = self::_prepareRequest("DELETE FROM ".$table." WHERE ".$sql, $params);
@@ -178,12 +186,12 @@ class Mysql {
     }
 
     /**
-    * @param string $table
-    * @param string $sql
-    * @param array $params
-    * @return Boolean
+    * @param $$table
+    * @param $sql
+    * @param $params
     */
-    public static function updateDBDatas($table, $sql, array $params = [])
+    public static function updateDBDatas(string $table, string $sql, array $params = [])
+    : bool
     {
         if(self::$user || self::getCurrentUser()['success']) {
             $stmt = self::_prepareRequest("UPDATE ".$table." SET ".$sql, $params);
@@ -193,26 +201,9 @@ class Mysql {
     }
 
 
-    private static function _prepareRequest ($sql, $a_bind_params)
+    private static function _prepareRequest (string $sql, array $a_bind_params)
+    : \mysqli_stmt
     {
-
-        $type_st = ["integer" => 'i', "string" => 's', "double" => 'd', "blob" => 'b'];
-        $type = [];
-        foreach($a_bind_params as &$param) {
-            $param = htmlspecialchars($param); //XSS securisation
-            $type[] = $type_st[gettype($param)];
-        }
-        unset($param);
-        $a_params = array();
-        $param_type = '';
-        $n = count($type);
-        for($i = 0; $i < $n; $i++) {
-            $param_type .= $type[$i];
-        }
-        $a_params[] = &$param_type;
-        for($i = 0; $i < $n; $i++) {
-            $a_params[] = &$a_bind_params[$i];
-        }
 
         if(($stmt = self::$_mysqli->prepare($sql)) === false) {
             Log::error(
@@ -220,11 +211,33 @@ class Mysql {
                 ['query' => $sql, 'errno' => self::$_mysqli->errno, 'error' => self::$_mysqli->error]
             );
         }
-        call_user_func_array(array($stmt, 'bind_param'), $a_params);
+
+        if(!empty($a_bind_params)) {
+            $type_st = ["integer" => 'i', "string" => 's', "double" => 'd', "blob" => 'b'];
+            $type = [];
+            foreach($a_bind_params as &$param) {
+                $param = htmlspecialchars($param); //XSS securisation
+                $type[] = $type_st[gettype($param)];
+            }
+            unset($param);
+            $a_params = array();
+            $param_type = '';
+            $n = count($type);
+            for($i = 0; $i < $n; $i++) {
+                $param_type .= $type[$i];
+            }
+            $a_params[] = &$param_type;
+            for($i = 0; $i < $n; $i++) {
+                $a_params[] =& $a_bind_params[$i];
+            }
+            call_user_func_array(array($stmt, 'bind_param'), $a_params);
+        }
+
         return $stmt;
     }
 
-    private static function _executeQuery (&$stmt)
+    private static function _executeQuery (\mysqli_stmt &$stmt)
+    : bool
     {
         if(!$stmt->execute()) {
             Log::error(

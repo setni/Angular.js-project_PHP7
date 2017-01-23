@@ -12,6 +12,10 @@ abstract class Controller {
     */
     protected $request;
 
+    /**
+    * All HTTP header concerning server
+    * @var object $server
+    */
     protected $server;
 
     public function __construct()

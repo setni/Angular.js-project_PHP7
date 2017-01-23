@@ -15,27 +15,27 @@ interface LoggerInterface
      * Runtime errors that do not require immediate action but should typically
      * be logged and monitored.
      *
-     * @param string $message
-     * @param array $context
-     * @return $message
+     * @param $message
+     * @param $context
      */
-    public static function error($message, array $context);
+    public static function error(string $message, array $context = [])
+    : Log;
 
     /**
      * Detailed debug information.
      *
-     * @param string $message
-     * @param array $context
-     * @return $message
+     * @param $message
+     * @param $context
      */
-    public static function debug($message, array $context);
+    public static function debug(string $message, array $context = [])
+    : Log;
 
     /**
      * Not blocking error.
      *
-     * @param string $message
-     * @param array $context
-     * @return $message
+     * @param $message
+     * @param $context
      */
-    public static function warning($message, array $context);
+    public static function warning(string $message, array $context = [])
+    : Log;
 }

@@ -47,7 +47,8 @@ final class Upload {
         self::$node = new Node();
     }
 
-    private static function _createTmpFile ($file, $filename)
+    private static function _createTmpFile (string $file, string $filename)
+    : array
     {
         self::_getInstance();
 
@@ -64,18 +65,14 @@ final class Upload {
     }
 
     /**
-    * @param array $file (base64 file)
-    * @param string $filename
-    * @return instance
+    * @param $file (base64 file)
+    * @param $filename
     */
     public static function checkFile ($file, $filename)
+    : self
     {
         self::$fileInfo = $file = self::_createTmpFile($file, $filename);
 
-        /*if(count($files) >= MAX_FILE_NUMBER) {
-            self::$checkFile = ['success' => false, 'message' => "Vous ne pouvez uploader que ".MAX_FILE_NUMBER." fichiers à la fois"];
-        }
-        */
         $fileTypes = explode(',', FILE_TYPES);
         if(($length = $file['size']) > MAX_FILE_SIZE) {
             self::$checkFile = ['success' => false, 'message' => "La taille du fichier est trop grande $length pour ".MAX_FILE_SIZE." autorisé"];
@@ -91,10 +88,10 @@ final class Upload {
     }
 
     /**
-    * @param Int $parentNodeId
-    * @return array
+    * @param $parentNodeId
     */
-    public static function moveFile ($parentNodeId)
+    public static function moveFile (int $parentNodeId)
+    : array
     {
         if(self::$checkFile['success']) {
             if(($token = Mysql::getSession()['APITOKEN']) != "") {
