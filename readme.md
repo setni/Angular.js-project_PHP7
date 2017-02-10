@@ -1,7 +1,7 @@
 Angular.js-project
 ==========
 
-**A full example of complete Angular project develop with a native PHP7.1 API.**
+**A full example of complete Angular project develop with a native PHP7.1 web service.**
 
 ## Documentation
 - Developer Docs: [https://github.com/setni/Angular.js-project/wiki](https://github.com/setni/Angular.js-project/wiki)

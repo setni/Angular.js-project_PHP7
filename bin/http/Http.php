@@ -1,7 +1,7 @@
 <?php
 
 /***********************************************************************************************
- * Angular->php standard REST API  - Full native php REST API Angular friendly
+ * Angular->php standard web service - Full native php web service Angular friendly
  *   Http.php Treatement of http request as object
  * Copyright 2016 Thomas DUPONT
  * MIT License
@@ -48,6 +48,7 @@ final class Http {
         static::$server = (object) $_SERVER;
     }
 
+
     /**
     * set http request (POST and GET)
     * @param object $request
@@ -56,6 +57,20 @@ final class Http {
     : self
     {
         static::$request = $request;
+        return static::$instance;
+    }
+
+    /**
+    * parse the rest parameters
+    * @param string $uri
+    */
+    public static function parseURI(string $uri)
+    : self
+    {
+        $parse = explode("/", $uri);
+        $lenght = count($parse);
+        static::$request->controller = $parse[$lenght-3];
+        static::$request->action = $parse[$lenght-2];
         return static::$instance;
     }
 

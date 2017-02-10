@@ -43,7 +43,8 @@
     }, 'JSON');
 
 */
-    var testObject = new JsTest('1000');
+    var testObject = new JsTest();
+    testObject.setTimer(1000);
     testObject.launchTest(
         {
             dataBase: function () {

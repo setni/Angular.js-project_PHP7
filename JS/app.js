@@ -17,22 +17,22 @@
         function($routeProvider, IdleProvider, KeepaliveProvider) {
             $routeProvider
             .when('/login', {
-                templateUrl: 'login/login.html',
-                controller: 'loginCtrl'
+                templateUrl: 'views/login/login.html',
+                controller: 'LoginController'
             })
             .when('/contact/:msg?', {
-                templateUrl: 'contact.html',
-                controller: 'contactCtrl'
+                templateUrl: 'views/contact.html',
+                controller: 'contactController'
             })
             .when('/register', {
-                templateUrl: 'login/register.html',
-                controller: 'loginCtrl'
+                templateUrl: 'views/login/register.html',
+                controller: 'LoginController'
             })
             .when('/home', {
-                templateUrl: 'home.html'
+                templateUrl: 'views/home.html'
             })
             .otherwise({
-                templateUrl: 'home.html'
+                templateUrl: 'views/home.html'
             });
 
         }

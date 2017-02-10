@@ -1,7 +1,7 @@
 <?php
 
 /***********************************************************************************************
- * Angular->php standard REST API  - Full native php REST API Angular friendly
+ * Angular->php standard web service - Full native php web service Angular friendly
  *   LoggerInterface.php PSR-3 full complaiance
  * Copyright 2016 Thomas DUPONT
  * MIT License
@@ -19,7 +19,7 @@ interface LoggerInterface
      * @param $context
      */
     public static function error(string $message, array $context = [])
-    : Log;
+    : self;
 
     /**
      * Detailed debug information.
@@ -28,7 +28,7 @@ interface LoggerInterface
      * @param $context
      */
     public static function debug(string $message, array $context = [])
-    : Log;
+    : self;
 
     /**
      * Not blocking error.
@@ -37,5 +37,5 @@ interface LoggerInterface
      * @param $context
      */
     public static function warning(string $message, array $context = [])
-    : Log;
+    : self;
 }

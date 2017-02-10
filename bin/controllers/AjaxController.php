@@ -1,7 +1,7 @@
 <?php
 
 /***********************************************************************************************
- * Angular->php standard REST API  - Full native php REST API Angular friendly
+ * Angular->php standard web service - Full native php web service Angular friendly
  *   AjaxController.php Controller for all Ajax request
  * Copyright 2016 Thomas DUPONT
  * MIT License
@@ -29,7 +29,7 @@ final class AjaxController extends Controller implements APIInterface {
     public function execute ()
     : string
     {
-        $funct = "_".$this->request->action;
+        $funct = "_".strtoupper($this->request->action);
         $functWhiteList = [
           '_SENDCONTACT',
           '_LOGIN',

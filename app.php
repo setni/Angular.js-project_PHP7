@@ -1,7 +1,7 @@
 <?php
 
 /***********************************************************************************************
- * Angular->php 7.1 standard REST API  - Full native php REST API Angular friendly
+ * Angular->php 7.1 standard REST API  - Full native php web service Angular friendly
  * BE CAREFULL, only for php 7.1 or highter
  *   app.php destination of all API request
  *   Version: 0.1.2
@@ -21,7 +21,7 @@ if(($post = json_decode(file_get_contents("php://input"))) === null) {
     exit("Merci de passer un objet JSON");
 }
 try {
-    $http = bin\http\Http::getInstance()->setHttp($post);
+    $http = bin\http\Http::getInstance()->setHttp($post)->parseURI($_SERVER['REQUEST_URI']);
     $response = bin\ControllerFactory::load($http);
 } catch(\EngineException $e) {
     $response = json_encode(['success' => false, 'message' => $e->getMessage()]);

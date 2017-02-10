@@ -1,7 +1,7 @@
 <?php
 
 /***********************************************************************************************
- * Angular->php standard REST API  - Full native php REST API Angular friendly
+ * Angular->php standard web service - Full native php web service Angular friendly
  *   config.php configuration file
  * Copyright 2016 Thomas DUPONT
  * MIT License

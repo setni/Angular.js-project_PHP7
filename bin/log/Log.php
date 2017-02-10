@@ -1,7 +1,7 @@
 <?php
 
 /***********************************************************************************************
- * Angular->php standard REST API  - Full native php REST API Angular friendly
+ * Angular->php standard web service - Full native php web service Angular friendly
  *   Log.php log management, used as service
  * Copyright 2016 Thomas DUPONT
  * MIT License
@@ -33,22 +33,6 @@ final class Log implements LoggerInterface{
         if(is_null(self::$instance)) {
             self::$instance = new self;
         }
-    }
-
-    /**
-    * @param $message
-    * @param $context
-    */
-    public static function error (string $message, array $context = [])
-    : self
-    {
-        self::_getInstance();
-        self::_interpolate($message, $context);
-        $error = var_export($message, true);
-        $date = date('l jS \of F Y h:i:s A');
-        $date = var_export($date, true);
-
-        file_put_contents(LOG_ERROR_FILE, "Error Trigger at $date: ".$error."\n", FILE_APPEND);
         return self::$instance;
     }
 
@@ -56,13 +40,28 @@ final class Log implements LoggerInterface{
     * @param $message
     * @param $context
     */
+    public static function error (string $message, array $context = [])
+    : LoggerInterface
+    {
+        self::_interpolate($message, $context);
+        $error = var_export($message, true);
+        $date = date('l jS \of F Y h:i:s A');
+        $date = var_export($date, true);
+
+        file_put_contents(LOG_ERROR_FILE, "Error Trigger at $date: ".$error."\n", FILE_APPEND);
+        return self::_getInstance();
+    }
+
+    /**
+    * @param $message
+    * @param $context
+    */
     public static function debug (string $message, array $context = [])
-    : self
+    : LoggerInterface
     {
         if(DEBUG) {
-            self::_getInstance();
             self::_interpolate($message, $context);
-            return self::$instance;
+            return self::_getInstance();
         }
     }
 
@@ -71,11 +70,10 @@ final class Log implements LoggerInterface{
     * @param $context
     */
     public static function warning (string $message, array $context = [])
-    : self
+    : LoggerInterface
     {
-        self::_getInstance();
         self::_interpolate($message, $context);
-        return self::$instance;
+        return self::_getInstance();
     }
 
     public function __toString()

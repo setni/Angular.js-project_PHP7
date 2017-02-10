@@ -7,7 +7,7 @@ angular.module('routeApp').directive("folder", function(){
             controller: '=controller'
           },
           createScope : false,
-          templateUrl: 'template/folder.html',
+          templateUrl: 'views/template/folder.html',
           link: function(scope, element, attrs){
               scope.folder.isFolder = scope.folder.path.match(/\./) === null;
               scope.toggle = function(folder){
@@ -25,7 +25,7 @@ return {
       controller: '=controller'
     },
     createScope : false,
-    templateUrl: 'template/file.html',
+    templateUrl: 'views/template/file.html',
     link: function(scope, element, attrs){
 
     }

@@ -1,7 +1,7 @@
 <?php
 
 /***********************************************************************************************
- * Angular->php standard REST API  - Full native php REST API Angular friendly
+ * Angular->php standard web service - Full native php web service Angular friendly
  *   Mysql.php Mysql interface full documented used as service
  * Copyright 2016 Thomas DUPONT
  * MIT License
@@ -67,7 +67,8 @@ class Mysql {
                 throw new \Exception(Log::error("Connect Error ({errno}) {error}", ['errno' => mysqli_connect_errno(), 'error' => mysqli_connect_error()]), 503);
             }
         } catch (\Exception $e) {
-            echo $e->getMessage();
+            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+            exit;
         }
 
     }

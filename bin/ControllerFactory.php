@@ -3,7 +3,7 @@
 namespace bin;
 
 /***********************************************************************************************
- * Angular->php standard REST API  - Full native php REST API Angular friendly
+ * Angular->php standard web service  - Full native php web service Angular friendly
  *   ControllerFactory.php Factory of controller for the MVC Pattern
  * Copyright 2016 Thomas DUPONT
  * MIT License
@@ -28,15 +28,15 @@ final class ControllerFactory {
     {
         $type = $http->getHttp()->controller ?? "";
         switch($type) {
-            case "Ajax":
+            case "ajax":
                 if(!self::_checkCSRF($http)) return json_encode(['success' => false]);
                 $exec = new AjaxController($http);
                 break;
-            case "Upload":
+            case "upload":
                 if(!self::_checkCSRF($http)) return json_encode(['success' => false]);
                 $exec = new UploadController($http);
                 break;
-            case "CSRF":
+            case "csrf":
                 return self::_CSRFToken();
                 break;
             default:

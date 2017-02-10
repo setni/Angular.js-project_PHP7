@@ -1,6 +1,6 @@
 <?php
 /***********************************************************************************************
- * Angular->php standard REST API  - Full native php REST API Angular friendly
+ * Angular->php standard web service - Full native php web service Angular friendly
  *   SessionManager.php Management of Session as service
  * Copyright 2016 Thomas DUPONT
  * MIT License
@@ -13,8 +13,11 @@
      public static function unsetSession()
      : void
      {
+         $tok = self::getCSRFToken();
          session_unset();
          session_destroy();
+         session_start();
+         self::setCSRFToken($tok);
      }
 
      /**
