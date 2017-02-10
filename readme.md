@@ -7,9 +7,10 @@ Angular.js-project
 - Developer Docs: [https://github.com/setni/Angular.js-project/wiki](https://github.com/setni/Angular.js-project/wiki)
 
 ## Current Release
-- <b>0.1.2</b> : Fix XSS and CSRF issue.
+- <b>0.1.3</b> : REST support.
 
 ## Changes
+- <b>0.1.3</b> : add REST support with Angular conformity.
 - <b>0.1.2</b> : Added CSRF and XSS securisation in <code>ControllerFactory.php</code> for CSRF AND <code>Mysql.php</code> for XSS.
 - <b>0.1.1</b> : Added JSON only support in <code>app.php</code>.
 
