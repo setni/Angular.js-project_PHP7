@@ -9,8 +9,7 @@
 
 namespace bin\models;
 
-use bin\models\mysql\Mysql;
-use bin\models\mysql\SessionManager;
+use bin\models\mysql\{Mysql, SessionManager};
 
 /**
 * To do the interface with the Mysql sub-service for user management
@@ -22,11 +21,11 @@ class User {
      * @var Object Mysqli connect
      *
      */
-     private $mysql;
+     private $_mysql;
 
      public function __construct ()
      {
-         $this->mysql = Mysql::getInstance();
+         $this->_mysql = Mysql::getInstance();
      }
 
      /**
@@ -38,8 +37,8 @@ class User {
      : array
      {
         $token = md5(uniqid());
-        $this->mysql->setUser(true);
-        if(($id = $this->mysql->setDBDatas(
+        $this->_mysql->setUser(true);
+        if(($id = $this->_mysql->setDBDatas(
                 "users",
                 "(login, password, API_key, roles, creationDate) VALUE (?, ?, ?, ?, NOW())",
                 [$login, $password, $token, $roles]
@@ -59,8 +58,8 @@ class User {
      : array
      {
 
-        $this->mysql->setUser(true);
-        $dataSet = $this->mysql->getDBDatas(
+        $this->_mysql->setUser(true);
+        $dataSet = $this->_mysql->getDBDatas(
             "SELECT * FROM users WHERE login = ?",
             [$login]
         )->toObject();
@@ -86,7 +85,7 @@ class User {
      public function checkUser ()
      : array
      {
-         return $this->mysql->getCurrentUser();
+         return $this->_mysql->getCurrentUser();
      }
 
  }

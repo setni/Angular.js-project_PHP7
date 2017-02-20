@@ -33,18 +33,18 @@ class Mysql {
     * @var Object Query result
     *
     */
-    private static $result;
+    private static $_result;
 
     /**
     * @var Boolean
     * Used for connection and registration, false by default
     */
-    public static $user = false;
+    public static $_user = false;
 
     public static function setUser(bool $bool)
     : void
     {
-        self::$user = $bool;
+        self::$_user = $bool;
     }
 
     public static function getInstance()
@@ -107,7 +107,7 @@ class Mysql {
         $stmt = self::_prepareRequest($sql, $params);
         /* Execute statement */
         self::_executeQuery($stmt);
-        self::$result = $stmt->get_result();
+        self::$_result = $stmt->get_result();
 
         return self::$_instance;
     }
@@ -131,13 +131,13 @@ class Mysql {
     : array
     {
 
-        if((self::$user || self::getCurrentUser()['success']) && self::$result->num_rows) {
-            $dataSet = self::$result->fetch_object();
+        if((self::$_user || self::getCurrentUser()['success']) && self::$_result->num_rows) {
+            $dataSet = self::$_result->fetch_object();
 
-            self::$result->close();
+            self::$_result->close();
             return ['success' => true, 'result' => $dataSet, 'session' => SessionManager::getSession()];
         } else {
-            self::$result->close();
+            self::$_result->close();
             return ['success' => false];
         }
     }
@@ -145,12 +145,12 @@ class Mysql {
     private static function _getResult(int $resultSet)
     : array
     {
-        if((self::$user || self::getCurrentUser()['success']) && self::$result->num_rows) {
-            $dataSet = self::$result->fetch_all($resultSet);
-            self::$result->close();
+        if((self::$_user || self::getCurrentUser()['success']) && self::$_result->num_rows) {
+            $dataSet = self::$_result->fetch_all($resultSet);
+            self::$_result->close();
             return ['success' => true, 'result' => $dataSet, 'session' => SessionManager::getSession()];
         } else {
-            self::$result->close();
+            self::$_result->close();
             return ['success' => false];
         }
     }
@@ -163,7 +163,7 @@ class Mysql {
     public static function setDBDatas(string $table, string $sql, array $params = [])
     : int
     {
-        if(self::$user || self::getCurrentUser()['success']) {
+        if(self::$_user || self::getCurrentUser()['success']) {
             $stmt = self::_prepareRequest("INSERT INTO ".$table." ".$sql, $params);
             return self::_executeQuery($stmt) ? self::$_mysqli->insert_id : 0;
             //return last ID
@@ -179,7 +179,7 @@ class Mysql {
     public static function unsetDBDatas(string $table, string $sql, array $params = [])
     : bool
     {
-        if(self::$user || self::getCurrentUser()['success']) {
+        if(self::$_user || self::getCurrentUser()['success']) {
             $stmt = self::_prepareRequest("DELETE FROM ".$table." WHERE ".$sql, $params);
             return self::_executeQuery($stmt);
         }
@@ -194,7 +194,7 @@ class Mysql {
     public static function updateDBDatas(string $table, string $sql, array $params = [])
     : bool
     {
-        if(self::$user || self::getCurrentUser()['success']) {
+        if(self::$_user || self::getCurrentUser()['success']) {
             $stmt = self::_prepareRequest("UPDATE ".$table." SET ".$sql, $params);
             return self::_executeQuery($stmt);
         }

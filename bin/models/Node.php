@@ -17,23 +17,25 @@ class Node {
     * @var Object Mysqli connect
     *
     */
-    private $mysql;
+    private $_mysql;
 
     /**
     * @var array list of forbidden chars used to create file or folder
     *
     */
-    private $forbidenChars = ['%','$','≠','∞','~','ß','◊','©','≈','‹','≤','≥','µ','¬','ﬁ','ƒ','∂','‡','®','†','º','π','§','¶','','•','#','°','.', '/', '\\'];
+    private $_forbidenChars = [
+        '%','$','≠','∞','~','ß','◊','©','≈','‹','≤','≥','µ','¬','ﬁ','ƒ','∂','‡','®','†','º','π','§','¶','','•','#','°','.', '/', '\\'
+    ];
 
     public function __construct ()
     {
-        $this->mysql = Mysql::getInstance();
+        $this->_mysql = Mysql::getInstance();
     }
 
     public function getNodes ()
     : array
     {
-        $dataSet = $this->mysql->getDBDatas("
+        $dataSet = $this->_mysql->getDBDatas("
           SELECT node_ID, parentNode_ID, path, record_name, authUsers, lastModif FROM nodes
         ")->toArrayAssoc();
         if($dataSet['success']) {
@@ -62,7 +64,7 @@ class Node {
     public function getNode (int $nodeId)
     : array
     {
-        $dataSet = $this->mysql->getDBDatas("
+        $dataSet = $this->_mysql->getDBDatas("
           SELECT node_ID, parentNode_ID, path, record_name, authUsers, lastModif FROM nodes WHERE node_ID = ?
         ", [$nodeId])->toObject();
 
@@ -103,7 +105,7 @@ class Node {
             $paramArray = [$nodeId, $nodePath, $name, SessionManager::getSession()['id']."|"];
         }
 
-        $nodeId = $this->mysql->setDBDatas(
+        $nodeId = $this->_mysql->setDBDatas(
             "nodes",
             "(parentNode_ID, path, record_name, authUsers, lastModif) VALUE (?,?,?,?, NOW())",
             $paramArray
@@ -126,7 +128,7 @@ class Node {
             $authUsers = explode("|", $nodeInfo['result']->authUsers);
             if(in_array($userId, $authUsers)) {
                 //var_dump($nodeId);
-                if($this->mysql->unsetDBDatas(
+                if($this->_mysql->unsetDBDatas(
                         "nodes",
                         "node_ID = ? OR parentNode_ID = ?",
                         [$nodeId, $nodeId]
@@ -175,6 +177,6 @@ class Node {
     private function _cleanNodeName (string &$name)
     : void
     {
-        $name = str_replace($this->forbidenChars, "", $name);
+        $name = str_replace($this->_forbidenChars, "", $name);
     }
 }

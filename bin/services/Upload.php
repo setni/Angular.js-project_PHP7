@@ -15,36 +15,36 @@ final class Upload {
     * @var Object Upload()
     *
     */
-    private static $instance;
+    private static $_instance;
 
     /**
-    * @var Array $checkFile
+    * @var Array $_checkFile
     *
     */
-    private static $checkFile;
+    private static $_checkFile;
 
     /**
-    * @var Array $fileInfo
+    * @var Array $_fileInfo
     *
     */
-    private static $fileInfo;
+    private static $_fileInfo;
 
     /**
     * @var Object Node()
     *
     */
-    private static $node;
+    private static $_node;
 
     private static function _getInstance ()
     {
-        if(is_null(self::$instance)) {
-            self::$instance = new self;
+        if(is_null(self::$_instance)) {
+            self::$_instance = new self;
         }
     }
 
     private function __construct ()
     {
-        self::$node = new Node();
+        self::$_node = new Node();
     }
 
     private static function _createTmpFile (string $file, string $filename)
@@ -71,20 +71,20 @@ final class Upload {
     public static function checkFile ($file, $filename)
     : self
     {
-        self::$fileInfo = $file = self::_createTmpFile($file, $filename);
+        self::$_fileInfo = $file = self::_createTmpFile($file, $filename);
 
         $fileTypes = explode(',', FILE_TYPES);
         if(($length = $file['size']) > MAX_FILE_SIZE) {
-            self::$checkFile = ['success' => false, 'message' => "La taille du fichier est trop grande $length pour ".MAX_FILE_SIZE." autorisé"];
+            self::$_checkFile = ['success' => false, 'message' => "La taille du fichier est trop grande $length pour ".MAX_FILE_SIZE." autorisé"];
         } else if(
             !in_array($file['ext'], $fileTypes)
             && !preg_match("/(".implode(')|(',$fileTypes).")/", mime_content_type($file['tmp_name']))
           ) {
-            self::$checkFile = ['success' => false, 'message' => "Type de fichier ".mime_content_type($file['tmp_name'])." non autorisé"];
+            self::$_checkFile = ['success' => false, 'message' => "Type de fichier ".mime_content_type($file['tmp_name'])." non autorisé"];
         }
 
-        self::$checkFile = ['success' => true];
-        return self::$instance;
+        self::$_checkFile = ['success' => true];
+        return self::$_instance;
     }
 
     /**
@@ -93,16 +93,16 @@ final class Upload {
     public static function moveFile (int $parentNodeId)
     : array
     {
-        if(self::$checkFile['success']) {
+        if(self::$_checkFile['success']) {
             if(($token = Mysql::getSession()['APITOKEN']) != "") {
-                $newNode = self::$node->setNode($parentNodeId, self::$fileInfo['name'], false);
+                $newNode = self::$_node->setNode($parentNodeId, self::$_fileInfo['name'], false);
                 if(!$newNode['success']) {
                     return ['success' => false, 'message' => "Erreur à la création du node"];
                 }
-                rename(self::$fileInfo['tmp_name'], USERDIR.$newNode['path']);
+                rename(self::$_fileInfo['tmp_name'], USERDIR.$newNode['path']);
                 return $newNode;
             }
         }
-        return self::$checkFile;
+        return self::$_checkFile;
     }
 }

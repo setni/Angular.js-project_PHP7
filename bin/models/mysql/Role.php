@@ -7,7 +7,7 @@
      /**
      * @var write Role
      */
-     private static $write = false;
+     private static $_write = false;
 
      private function _construct ()
      {
@@ -25,22 +25,22 @@
              switch ($type) {
                case 0: //admin
                  if($role) {
-                     self::$write = true;
+                     self::$_write = true;
                  }
                  break;
                case 1: //Owner
                  if($role) {
-                     self::$write = true;
+                     self::$_write = true;
                  }
                  break;
                case 2: //Read
                  if($role) {
-                     self::$write = false;
+                     self::$_write = false;
                  }
                  break;
                case 3: //Write
                  if($role) {
-                     self::$write = true;
+                     self::$_write = true;
                  }
                  break;
              }

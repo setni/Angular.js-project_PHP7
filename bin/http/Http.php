@@ -15,26 +15,26 @@ final class Http {
     * The Post or Get request
     * @var object $request
     */
-    private static $request;
+    private static $_request;
 
     /**
     * All HTTP header concerning server
     * @var object $server
     */
-    public static $server;
+    public static $_server;
 
     /**
     * @var object $instance
     */
-    private static $instance;
+    private static $_instance;
 
     public static function getInstance()
     : self
     {
-        if(is_null(static::$instance)) {
-            static::$instance = new self;
+        if(is_null(static::$_instance)) {
+            static::$_instance = new self;
         }
-        return static::$instance;
+        return static::$_instance;
     }
 
     private function __construct()
@@ -45,7 +45,7 @@ final class Http {
     private static function _server()
     : void
     {
-        static::$server = (object) $_SERVER;
+        static::$_server = (object) $_SERVER;
     }
 
 
@@ -56,8 +56,8 @@ final class Http {
     public static function setHttp(\stdClass $request)
     : self
     {
-        static::$request = $request;
-        return static::$instance;
+        static::$_request = $request;
+        return static::$_instance;
     }
 
     /**
@@ -69,9 +69,9 @@ final class Http {
     {
         $parse = explode("/", $uri);
         $lenght = count($parse);
-        static::$request->controller = $parse[$lenght-3];
-        static::$request->action = $parse[$lenght-2];
-        return static::$instance;
+        static::$_request->controller = $parse[$lenght-3];
+        static::$_request->action = $parse[$lenght-2];
+        return static::$_instance;
     }
 
     /**
@@ -80,7 +80,7 @@ final class Http {
     public static function getHttp()
     : \stdClass
     {
-        return static::$request;
+        return static::$_request;
     }
 
     /**
@@ -89,7 +89,7 @@ final class Http {
     public static function getServer()
     : \stdClass
     {
-        return static::$server;
+        return static::$_server;
     }
 
 }

@@ -15,25 +15,25 @@ final class Log implements LoggerInterface{
     * @var Object Log()
     *
     */
-    private static $instance;
+    private static $_instance;
 
     /**
     * @var string $message
     *
     */
-    private static $message;
+    private static $_message;
 
     private function __construct()
 	{
 	}
 
     private static function _getInstance ()
-    : void
+    : self
     {
-        if(is_null(self::$instance)) {
-            self::$instance = new self;
+        if(is_null(self::$_instance)) {
+            self::$_instance = new self;
         }
-        return self::$instance;
+        return self::$_instance;
     }
 
     /**
@@ -78,7 +78,7 @@ final class Log implements LoggerInterface{
 
     public function __toString()
     {
-        return self::$message;
+        return self::$_message;
     }
 
     private static function _interpolate (string &$message, array $context)
@@ -91,6 +91,6 @@ final class Log implements LoggerInterface{
             }
         }
         $message = strtr($message, $replace);
-        self::$message = $message;
+        self::$_message = $message;
     }
 }
