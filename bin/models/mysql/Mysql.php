@@ -108,7 +108,6 @@ class Mysql {
         /* Execute statement */
         self::_executeQuery($stmt);
         self::$_result = $stmt->get_result();
-
         return self::$_instance;
     }
 

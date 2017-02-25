@@ -1,4 +1,5 @@
-angular.module('routeApp').directive("folder", function(){
+angular.module('routeApp')
+.directive("folder", function(){
 
     return {
           restrict: 'E',
@@ -19,15 +20,27 @@ angular.module('routeApp').directive("folder", function(){
           }
     };
 }).directive("file", function(){
-return {
-    restrict: 'E',
-    scope: {
-      controller: '=controller'
-    },
-    createScope : false,
-    templateUrl: 'views/template/file.html',
-    link: function(scope, element, attrs){
+    return {
+        restrict: 'E',
+        scope: {
+          controller: '=controller'
+        },
+        createScope : false,
+        templateUrl: 'views/template/file.html',
+        link: function(scope, element, attrs){
 
-    }
-};
+        }
+    };
+}).directive("code", function(){
+    return {
+        restrict: 'E',
+        scope: {
+          controller: '=controller'
+        },
+        createScope : false,
+        templateUrl: 'views/template/code.html',
+        link: function(scope, element, attrs){
+
+        }
+    };
 });

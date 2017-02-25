@@ -21,6 +21,19 @@ angular.module('routeApp').factory('Upload', function($http, $location, $sce) {
                });
             };
         },
+        createFile: function (content, title, parentNodeId, langage, onSuccess) {
+            var base64 = "data:text/txt;base64,"+btoa(content);
+            console.log(base64);
+            $http.post(
+                APP+"/"+controller+"/createfile/",
+                {file : base64, filename: title+".txt", pNodeId: parentNodeId, langage: langage, csrf: this.csrfToken}
+            ).then( function(promise) {
+
+                if(promise.data.success) {
+                    onSuccess(promise) ;
+                }
+            });
+        },
         deleteNode : function (nodeId) {
             return $http.post(
                 APP+"/"+controller+"/deletenode/",

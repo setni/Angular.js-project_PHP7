@@ -6,10 +6,12 @@ angular.module('routeApp').controller('HomeController', ['$scope', '$http', '$lo
         vm.tree = [];
         vm.dataSet = {};
         vm.pathInUpload = "";
-        vm.nodeidUpload = 0;
+        vm.nodeidUpload = 1;
         vm.fileSelected = false;
         vm.selected =  {};
         vm.selected.childrens = [];
+        vm.addCodeBool = false;
+        vm.dataLoading = false;
         //vm.dataLoading = true;
         Ajax.getHome().then(
               function(promise){
@@ -56,7 +58,13 @@ angular.module('routeApp').controller('HomeController', ['$scope', '$http', '$lo
               console.log(vm.selected.childrens);
 
           };
+          vm.addCode = function () {
+
+              vm.addCodeBool = !vm.addCodeBool;
+
+          };
           vm.addNode = function (promise, name, isFolder) {
+              vm.dataLoading = false;
               if(promise.data.success) {
                   //vm.tree
                   var el = {
@@ -79,8 +87,16 @@ angular.module('routeApp').controller('HomeController', ['$scope', '$http', '$lo
               var files = document.getElementsByClassName('fileUpload');
               for(var i = 0; i < files.length; i++) {
                   var file = files[i];
-                  Upload.upload(file, vm.nodeidUpload , vm.addNode(promise, file.files[0].name, false));
+                  Upload.upload(file, vm.nodeidUpload , function (promise) {
+                      vm.addNode(promise, file.files[0].name, false);
+                  });
               }
+          };
+          vm.createFile = function() {
+              vm.dataLoading = true;
+              Upload.createFile(vm.codeContent, vm.codeTitle, vm.nodeidUpload, vm.codeLangage, function (promise) {
+                  vm.addNode(promise, vm.codeTitle+".txt", false);
+              });
           };
           vm.organizeNode = function (tab) {
               Enumerable.From(tab).ForEach(function(t){

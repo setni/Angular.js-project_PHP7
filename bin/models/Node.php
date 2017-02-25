@@ -87,10 +87,16 @@ class Node {
     * @param $isDirectory
     *
     */
-    public function setNode (int $nodeId, string $name, bool $isDir = false)
+    public function setNode (int $nodeId, string $name, string $langage = "", bool $isDir = false)
     : array
     {
+        //check if the file or the folder still exist
+        if($this->isNode($nodeId, $name)) {
+            return ['success' => false, 'message' => "Ce noeud existe déja"];
+        }
+        //Delete the forbidden chars
         $this->_cleanNodeName($name);
+        // Get tha info of the parent node
         $check = $this->getNode($nodeId);
 
         if($check['success']) {
@@ -99,19 +105,35 @@ class Node {
             return $check;
         }
         if($isDir) {
-            $paramArray = [$nodeId, $nodePath."/", $name, SessionManager::getSession()['id']."|"];
+            $paramArray = [$nodeId, $nodePath."/", $name, $langage, SessionManager::getSession()['id']."|"];
             $this->_createDir($nodePath);
         } else {
-            $paramArray = [$nodeId, $nodePath, $name, SessionManager::getSession()['id']."|"];
+            $paramArray = [$nodeId, $nodePath, $name, $langage, SessionManager::getSession()['id']."|"];
         }
 
         $nodeId = $this->_mysql->setDBDatas(
             "nodes",
-            "(parentNode_ID, path, record_name, authUsers, lastModif) VALUE (?,?,?,?, NOW())",
+            "(parentNode_ID, path, record_name, langage, authUsers, lastModif) VALUE (?,?,?,?,?, NOW())",
             $paramArray
         );
+
         return $nodeId ? ['success' => true, 'result' => ['path' => $nodePath, 'nodeId' => $nodeId]]
             : ['success' => false, 'message' => "erreur à la création du node"];
+    }
+
+    public function isNode(int $nodeId, string $name)
+    : bool
+    {
+        return $this->_mysql->getDBDatas(
+                "SELECT node_ID FROM nodes WHERE parentNode_ID = ? AND record_name = ?",
+                [$nodeId, $name]
+            )->ToArray()['success'];
+    }
+
+    public function isNodePresent(string $path)
+    : bool
+    {
+        // @TODO Check if the node is set in the file system
     }
 
     /**
@@ -177,6 +199,8 @@ class Node {
     private function _cleanNodeName (string &$name)
     : void
     {
-        $name = str_replace($this->_forbidenChars, "", $name);
+        $ext = substr($name, strrpos($name, '.'));
+        $name = substr($name, 0, strrpos($name, '.'));
+        $name = str_replace($this->_forbidenChars, "", $name).$ext;
     }
 }

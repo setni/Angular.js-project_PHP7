@@ -2,7 +2,7 @@
 
 namespace bin\services;
 
-use bin\models\mysql\Mysql;
+use bin\models\mysql\{Mysql, SessionManager};
 use bin\models\Node;
 
 
@@ -36,6 +36,7 @@ final class Upload {
     private static $_node;
 
     private static function _getInstance ()
+    : void
     {
         if(is_null(self::$_instance)) {
             self::$_instance = new self;
@@ -54,6 +55,7 @@ final class Upload {
 
         $contentFile = substr($file, strpos($file, "base64,")+7);
         $tmpName = md5(uniqid()).".".substr(strrchr($filename, '.'), 1);
+        
         file_put_contents(FILETMPDIR.$tmpName, base64_decode($contentFile));
 
         return [
@@ -68,7 +70,7 @@ final class Upload {
     * @param $file (base64 file)
     * @param $filename
     */
-    public static function checkFile ($file, $filename)
+    public static function checkFile (string $file, string $filename)
     : self
     {
         self::$_fileInfo = $file = self::_createTmpFile($file, $filename);
@@ -89,17 +91,22 @@ final class Upload {
 
     /**
     * @param $parentNodeId
+    * @param $langage, the langage (code) of the node
     */
-    public static function moveFile (int $parentNodeId)
+    public static function moveFile (int $parentNodeId, string $langage = "")
     : array
     {
         if(self::$_checkFile['success']) {
-            if(($token = Mysql::getSession()['APITOKEN']) != "") {
+            if(($token = SessionManager::getSession()['APITOKEN']) != "") {
                 $newNode = self::$_node->setNode($parentNodeId, self::$_fileInfo['name'], false);
                 if(!$newNode['success']) {
-                    return ['success' => false, 'message' => "Erreur à la création du node"];
+                    return $newNode;
                 }
-                rename(self::$_fileInfo['tmp_name'], USERDIR.$newNode['path']);
+                $tmpFile = self::$_fileInfo['tmp_name'];
+                rename($tmpFile, USERDIR.$newNode['result']['path']);
+                if(is_file($tmpFile)) {
+                    unlink($tmpFile);
+                }
                 return $newNode;
             }
         }

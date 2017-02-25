@@ -11,6 +11,7 @@ namespace bin\controllers;
 
 use bin\models\{Cart, Order, Node, User};
 use bin\services\Upload;
+use bin\services\CrudFile;
 
 /**
 * @pattern Command, VMC
@@ -40,7 +41,8 @@ final class AjaxController extends Controller implements APIInterface {
           '_REGISTER',
           '_DISCONNECT',
           '_DELETENODE',
-          '_CREATEFOLDER'
+          '_CREATEFOLDER',
+          '_CREATEFILE'
         ];
         return in_array($funct, $functWhiteList) ? $this->$funct($this->request) : json_encode(['success' => false]);
     }
@@ -78,6 +80,20 @@ final class AjaxController extends Controller implements APIInterface {
     {
         return json_encode(
             Upload::checkFile($request->file, $request->filename)->moveFile($request->pNodeId)
+        );
+    }
+
+    private function _CREATEFILE (\stdClass $request)
+    : string
+    {
+        $params = [
+            'name'    => $request->filename,
+            'file'    => $request->file,
+            'parent'  => $request->pNodeId,
+            'langage' => $request->langage
+        ];
+        return json_encode(
+            CrudFile::createFile($params)
         );
     }
 
